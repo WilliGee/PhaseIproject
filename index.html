@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
   </head>
   <body>
-    <div class="wrapper">
+    <div class="container">
       <header>Currency Converter</header>
       <form action="#">
         <div class="dropdowns">
@@ -19,7 +19,7 @@
               <img src="https://flagcdn.com/40x30/us.png" alt="flag">
               <select> <!-- List in Js --> </select>
             </div>
-            <input type="text" value="1">
+            <input type="text" id= "input_currency" name="" value="0">
           </div>
           <div class="icon"><i class="fas fa-exchange-alt"></i></div>
           <div class="to">
@@ -28,17 +28,16 @@
               <img src="https://flagcdn.com/40x30/ke.png" alt="flag">
               <select> <!-- List in Js --> </select>
             </div>
-            <input type="text" id="lname" name="lname" disabled><br><br>
+            <input type="text" id= "output_currency" disabled name="">
 
           </div>
         </div>
         <div class="exchange-rate"></div>
-        <button>Calculate</button>
+        <button>Convert</button>
       </form>
     </div>
 
     <script src="./index.js"></script>
-    <script src="./Countrycodes.js"></script>
 
   </body>
 </html>

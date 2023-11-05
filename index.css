@@ -20,20 +20,20 @@ body{
   color: #fff;
   background: #000000;
 }
-.wrapper{
+.container{
   width: 370px;
   padding: 30px;
   border-radius: 20px;
   background: #fff;
   box-shadow: 7px 7px 20px rgba(0, 0, 0, 0.05);
 }
-.wrapper header{
+.container header{
   font-size: 25px;
   text-transform: uppercase;
   font-weight: 550;
   text-align: center;
 }
-.wrapper form{
+.container form{
   margin: 25px 0 20px 0;
 }
 form :where(input, select,){
@@ -93,7 +93,7 @@ form .from .input{
   margin: 0 -5px 0 5px;
 }
 .select-box select::-webkit-scrollbar{
-  width: 100px;
+  width: 10px;
 }
 .select-box select::-webkit-scrollbar-track{
   background: #fff;

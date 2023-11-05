@@ -160,21 +160,48 @@ let country_list = {
     "ZWD" : "ZW"
 }
 
-const dropList = document.querySelectorAll("form select"),
-fromCurrency = document.querySelector(".from select"),
-toCurrency = document.querySelector(".to select"),
-getButton = document.querySelector("form button");
+// api Key
+const apiKey = "a31ef3043ab092d3871d53e4";
 
-for (let i = 0; i < dropList.length; i++) {
+const dropdowns = document.querySelectorAll(".dropdowns select");
+fromCurrency = document.querySelector(".from select");
+toCurrency = document.querySelector(".to select");
+getButton = document.querySelector("form button")
+
+for (let i = 0; i < dropdowns.length; i++) {
     for(let currency_code in country_list){
+        // console.log(currency_code)
+
+        // selecting from Currency default as USD and to currency default as KES
         let selected = i == 0 ? currency_code == "USD" ? "selected" : "" : currency_code == "KES" ? "selected" : "";
+        
+        
         let optionTag = `<option value="${currency_code}" ${selected}>${currency_code}</option>`;
-        dropList[i].insertAdjacentHTML("beforeend", optionTag);
+        dropdowns[i].insertAdjacentHTML("beforeend", optionTag);
     }
-    dropList[i].addEventListener("change", e =>{
+    dropdowns[i].addEventListener("change", e =>{
         loadFlag(e.target);
     });
 }
+
+getButton.addEventListener("click", e =>{
+    e.preventDefault();
+    convert();
+});
+
+window.addEventListener("load", ()=>{
+    convert();
+});
+
+const exchangeIcon = document.querySelector("form .icon");
+exchangeIcon.addEventListener("click", ()=>{
+    let tempCode = fromCurrency.value;
+    fromCurrency.value = toCurrency.value;
+    toCurrency.value = tempCode;
+    loadFlag(fromCurrency);
+    loadFlag(toCurrency);
+    convert();
+})
 
 function loadFlag(element){
     for(let code in country_list){
@@ -185,22 +212,28 @@ function loadFlag(element){
     }
 }
 
-window.addEventListener("load", ()=>{
-    getExchangeRate();
-});
+// Default amount in the form
 
-getButton.addEventListener("click", e =>{
-    e.preventDefault();
-    getExchangeRate();
-});
 
-const exchangeIcon = document.querySelector("form .icon");
-exchangeIcon.addEventListener("click", ()=>{
-    let tempCode = fromCurrency.value;
-    fromCurrency.value = toCurrency.value;
-    toCurrency.value = tempCode;
-    loadFlag(fromCurrency);
-    loadFlag(toCurrency);
-    getExchangeRate();
-})
+function convert(){
+    const fromCurrency = document.querySelector(".from input");
+    const toCurrency = document.querySelector(".to output");
+    let amountVal = amount.value;
+
+    if(amountVal == "" || amountVal == "0"){
+        amount.value = "0";
+        amountVal = 0;
+    }  
+
+    let url = `https://v6.exchangerate-api.com/v6/${apiKey}/latest/${fromCurrency.value}`;
+    fetch(url)
+    .then(response => response.json()).then(result =>{
+        let convert = result.conversion_rates[toCurrency.value];
+        let toCurrency = (amountVal * convert).toFixed(2); 
+        // console.log(totalExrate)
+        // exchangeRateTxt.innerText = `${amountVal} ${fromCurrency.value} = ${totalExRate} ${toCurrency.value}`;
+    }).catch(() =>{
+        // exchangeRateTxt.innerText = "Something went wrong";
+    });
+}
 
