@@ -1,0 +1,136 @@
+/* Import Google Font - Poppins */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+  border: none;
+  outline: none;
+}
+body{
+  background: #000000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 0 10px;
+}
+::selection{
+  color: #fff;
+  background: #000000;
+}
+.wrapper{
+  width: 370px;
+  padding: 30px;
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: 7px 7px 20px rgba(0, 0, 0, 0.05);
+}
+.wrapper header{
+  font-size: 25px;
+  text-transform: uppercase;
+  font-weight: 550;
+  text-align: center;
+}
+.wrapper form{
+  margin: 25px 0 20px 0;
+}
+form :where(input, select,){
+  width: 100%;
+  outline: none;
+  border-radius: 15px;
+  border: none;
+ 
+}
+form :where(button){
+  width: 100%;
+  outline: none;
+  border-radius: 15px;
+  border: none;
+}
+form p{
+  font-size: 20px;
+  margin-bottom: 5px;
+}
+form input{
+  height: 40px;
+  font-size: 17px;
+  padding: 0 15px;
+  margin-bottom: 30px;
+  border: 1px solid #999;
+}
+form input:focus{
+  padding: 0 15px;
+  border: 2px solid #1e1d2c;
+}
+form .dropdowns{
+  margin-top: 20px;
+  align-items: center ;
+  justify-content: space-between;
+}
+.dropdowns .select-box{
+  display: flex;
+  width: 110px;
+  height: 35px;
+  align-items: center;
+  border-radius: 15px;
+  justify-content: center;
+  border: 1px solid #999;
+}
+form .from .input{
+  display: flex;
+  align-items: center;
+}
+.select-box img{
+  max-width: 40px;
+}
+.select-box select{
+  width: auto;
+  font-size: 15px;
+  background: none;
+  border-radius: 100px;
+  margin: 0 -5px 0 5px;
+}
+.select-box select::-webkit-scrollbar{
+  width: 100px;
+}
+.select-box select::-webkit-scrollbar-track{
+  background: #fff;
+}
+.select-box select::-webkit-scrollbar-thumb{
+  background: #888;
+  border-radius: 8px;
+  border-right: 2px solid #ffffff;
+}
+.dropdowns .icon{
+  cursor: pointer;
+  margin-top: 30px;
+  font-size: 22px;
+}
+form .exchange-rate{
+  font-size: 17px;
+  margin: 20px 0 30px;
+}
+.fas.fa-exchange-alt {
+  color: black;
+  font-size: 40px;
+  margin-bottom: 20px;
+  margin-top: -30px;
+  transform: rotate(90deg);
+  position: relative;
+  top: -18px;
+  left: 10px;
+
+}
+form button{
+  height: 52px;
+  color: #fff;
+  font-size: 17px;
+  cursor: pointer;
+  background: #2E6171;
+  transition: 0.3s ease;
+}
+form button:hover{
+  background: #1C2541;
+}
