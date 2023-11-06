@@ -163,77 +163,70 @@ let country_list = {
 // api Key
 const apiKey = "a31ef3043ab092d3871d53e4";
 
-const dropdowns = document.querySelectorAll(".dropdowns select");
-fromCurrency = document.querySelector(".from select");
-toCurrency = document.querySelector(".to select");
-getButton = document.querySelector("form button")
+const dropList = document.querySelectorAll("form select"),
+fromCurrency = document.querySelector(".from select"),
+toCurrency = document.querySelector(".to select"),
 
-for (let i = 0; i < dropdowns.length; i++) {
+getButton = document.querySelector("form button");
+
+for (let i = 0; i < dropList.length; i++) {
     for(let currency_code in country_list){
-        // console.log(currency_code)
-
-        // selecting from Currency default as USD and to currency default as KES
         let selected = i == 0 ? currency_code == "USD" ? "selected" : "" : currency_code == "KES" ? "selected" : "";
-        
-        
         let optionTag = `<option value="${currency_code}" ${selected}>${currency_code}</option>`;
-        dropdowns[i].insertAdjacentHTML("beforeend", optionTag);
+        dropList[i].insertAdjacentHTML("beforeend", optionTag);
     }
-    dropdowns[i].addEventListener("change", e =>{
+    dropList[i].addEventListener("change", e =>{
         loadFlag(e.target);
     });
 }
 
-getButton.addEventListener("click", e =>{
-    e.preventDefault();
-    convert();
-});
+function loadFlag(element){
+    for(let code in country_list){
+        if(code == element.value){
+            let imgTag = element.parentElement.querySelector("img");
+            imgTag.src = `https://flagcdn.com/48x36/${country_list[code].toLowerCase()}.png`;
+        }
+    }
+}
 
 window.addEventListener("load", ()=>{
-    convert();
+    getExchangeRate();
+});
+
+getButton.addEventListener("click", e =>{
+    e.preventDefault();
+    getExchangeRate();
 });
 
 const exchangeIcon = document.querySelector("form .icon");
 exchangeIcon.addEventListener("click", ()=>{
     let tempCode = fromCurrency.value;
     fromCurrency.value = toCurrency.value;
+    toCurrency.value = toCurrency.value;
     toCurrency.value = tempCode;
     loadFlag(fromCurrency);
     loadFlag(toCurrency);
-    convert();
+    getExchangeRate();
 })
 
-function loadFlag(element){
-    for(let code in country_list){
-        if(code == element.value){
-            let imgTag = element.parentElement.querySelector("img");
-            imgTag.src = `https://flagcdn.com/56x42/${country_list[code].toLowerCase()}.png`;
-        }
-    }
-}
+// Default Currency
 
-// Default amount in the form
-
-
-function convert(){
-    const fromCurrency = document.querySelector(".from input");
-    const toCurrency = document.querySelector(".to output");
+function getExchangeRate(){
+    const amount = document.querySelector("form input");
+    const exchangeRateTxt = document.querySelector("form .exchange-rate");
     let amountVal = amount.value;
-
     if(amountVal == "" || amountVal == "0"){
-        amount.value = "0";
-        amountVal = 0;
-    }  
-
+        amount.value = "1";
+        amountVal = 1;
+    }
+    exchangeRateTxt.innerText = "Calculating...";
     let url = `https://v6.exchangerate-api.com/v6/${apiKey}/latest/${fromCurrency.value}`;
-    fetch(url)
-    .then(response => response.json()).then(result =>{
-        let convert = result.conversion_rates[toCurrency.value];
-        let toCurrency = (amountVal * convert).toFixed(2); 
-        // console.log(totalExrate)
-        // exchangeRateTxt.innerText = `${amountVal} ${fromCurrency.value} = ${totalExRate} ${toCurrency.value}`;
-    }).catch(() =>{
-        // exchangeRateTxt.innerText = "Something went wrong";
+    fetch(url).then(response => response.json()).then(result =>{
+        let exchangeRate = result.conversion_rates[toCurrency.value];
+        let totalExRate = (amountVal * exchangeRate).toFixed(2);
+        exchangeRateTxt.innerText = `${amountVal} ${fromCurrency.value} = ${totalExRate} ${toCurrency.value}`;
+        
+    }).catch(() =>{ 
+        exchangeRateTxt.innerText = "Something went wrong";
     });
 }
-
